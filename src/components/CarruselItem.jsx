@@ -1,5 +1,7 @@
 import React from 'react';
 import '../assets/styles/components/CarruselItem.scss';
+import playIcon from '../assets/static/play-icon.png';
+import plusIcon from '../assets/static/plus-icon.png';
 
 const CarruselItem = ({ children }) => (
   <div className='carousel-item'>
@@ -10,8 +12,8 @@ const CarruselItem = ({ children }) => (
     />
     <div className='carousel-item__details'>
       <div>
-        <img src='https://img.icons8.com/flat_round/64/000000/play--v1.png' alt='Imagen' />
-        <img src='https://img.icons8.com/ios-filled/50/26e07f/heart-plus.png' alt='Imagen' />
+        <img src={playIcon} alt='Play icon' />
+        <img src={plusIcon} alt='Plus Icon' />
       </div>
       <p className='carousel-item__details--title'>Titulo descriptivo</p>
       <p className='carousel-item__details--subtitle'>2019 16+ 114 minutos</p>

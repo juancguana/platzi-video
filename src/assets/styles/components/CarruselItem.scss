@@ -32,6 +32,10 @@
 }
 
 .carousel-item__details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.9) 0%,
