@@ -1,0 +1,27 @@
+.main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+.main__title {
+  color: white;
+  font-size: 25px;
+}
+
+.input {
+  background-color: #8dd3ba;
+  border: 2px solid white;
+  border-radius: 25px;
+  color: white;
+  font-family: "Mulish", sans-serif;
+  font-size: 16px;
+  height: 50px;
+  padding: 0px 20px;
+  width: 70%;
+}
+
+::placeholder {
+  color: white;
+}
