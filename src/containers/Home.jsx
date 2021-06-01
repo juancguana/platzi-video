@@ -1,27 +1,20 @@
 import React from 'react';
-import Header from '../components/Header';
+import { connect } from 'react-redux';
 import '../assets/styles/App.scss';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carrusel from '../components/Carrucel';
 import CarruselItem from '../components/CarruselItem';
-import Footer from '../components/Footer';
-import useInitialState from '../hooks/useInitialState';
 
-const API = 'http://localhost:3000/initalState';
-
-const App = () => {
-  const videos = useInitialState(API);
-
+const Home = ({ mylist, trends, originals }) => {
   return (
-    <div className='App'>
-      <Header />
+    <>
       <Search />
-      {videos.mylist.length > 0 && (
+      {mylist.length > 0 && (
         <Categories title='Mi Lista'>
           <Carrusel>
-            {videos.mylist.map((item) => (
-              <CarruselItem key={item.id} {...item} />
+            {mylist.map((item) => (
+              <CarruselItem key={item.id} {...item} isList />
             ))}
           </Carrusel>
         </Categories>
@@ -29,20 +22,28 @@ const App = () => {
 
       <Categories title='Tendencias'>
         <Carrusel>
-          {videos.trends.map((item) => (
+          {trends.map((item) => (
             <CarruselItem key={item.id} {...item} />
           ))}
         </Carrusel>
       </Categories>
       <Categories title='Originales'>
         <Carrusel>
-          {videos.originals.map((item) => (
+          {originals.map((item) => (
             <CarruselItem key={item.id} {...item} />
           ))}
         </Carrusel>
       </Categories>
-      <Footer />
-    </div>
+    </>
   );
 };
-export default App;
+
+const mapStateToProps = (state) => {
+  return {
+    mylist: state.mylist,
+    trends: state.trends,
+    originals: state.originals,
+  };
+};
+
+export default connect(mapStateToProps, null)(Home);
