@@ -1,29 +1,64 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import '../assets/styles/components/Header.scss';
 import { Link } from 'react-router-dom';
 import logo from '../assets/static/logo-platzi-video-BW2.png';
+import gravatar from '../utils/gravatar';
 import userIcon from '../assets/static/user-icon.png';
+import { logoutRequest } from '../actions';
+const Header = (props) => {
+  const { user } = props;
+  const hasUser = Object.keys(user).length > 0;
 
-const Header = () => (
-  <header className='header'>
-    <Link to='/'>
-      <img className='header__img' src={logo} alt='Logo de un video' />
-    </Link>
-    <div className='header__menu'>
-      <div className='header__menu--profile'>
-        <img src={userIcon} alt='Icono de usuario' />
-        <p>Perfil</p>
+  const handleLogout = () => {
+    props.logoutRequest({});
+  };
+
+  return (
+    <header className='header'>
+      <Link to='/'>
+        <img className='header__img' src={logo} alt='Logo de un video' />
+      </Link>
+      <div className='header__menu'>
+        <div className='header__menu--profile'>
+          {hasUser ? (
+            <img src={gravatar(user.email)} alt={user.email} />
+          ) : (
+            <img src={userIcon} alt='Icono de usuario' />
+          )}
+          <p>Perfil</p>
+        </div>
+        <ul>
+          {hasUser ? (
+            <li>
+              <a href='/'>{user.name}</a>
+            </li>
+          ) : null}
+          {hasUser ? (
+            <li>
+              <a href='#logout' onClick={handleLogout}>
+                Cerrar Sesion
+              </a>
+            </li>
+          ) : (
+            <li>
+              <Link to='/login'>Iniciar Sesion</Link>
+            </li>
+          )}
+        </ul>
       </div>
-      <ul>
-        <li>
-          <a href='/'>Cuenta</a>
-        </li>
-        <li>
-          <Link to='/login'>Iniciar Sesion</Link>
-        </li>
-      </ul>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  logoutRequest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

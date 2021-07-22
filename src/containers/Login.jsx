@@ -1,21 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { loginRequest } from '../actions';
 import googleIcon from '../assets/static/google-icon.png';
 import twitterIcon from '../assets/static/twitter-icon.png';
 import '../assets/styles/components/Login.scss';
 
-const Login = () => {
+const Login = (props) => {
+  const [form, setValues] = useState({ email: '' });
+
+  const handleInput = (event) => {
+    setValues({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.loginRequest(form);
+    props.history.push('/');
+  };
+
   return (
     <section className='login__container'>
       <h2>Inicia sesión</h2>
-      <form className='login__container--form'>
-        <input className='input__login' type='text' placeholder='Correo' />
+      <form className='login__container--form' onSubmit={handleSubmit}>
         <input
           className='input__login'
+          name='email'
+          type='text'
+          placeholder='Correo'
+          onChange={handleInput}
+        />
+        <input
+          className='input__login'
+          name='password'
           type='password'
           placeholder='Constraseña'
+          onChange={handleInput}
         />
-        <button type='button' className='button'>
+        <button type='submit' className='button'>
           Iniciar sesión
         </button>
         <div className='login__container--remember-me'>
@@ -37,11 +62,15 @@ const Login = () => {
         </div>
       </section>
       <p className='login__container--register'>
-        No tienes ninguna cuenta 
+        No tienes ninguna cuenta
         <Link to='/register'>Regsitrate</Link>
       </p>
     </section>
   );
 };
 
-export default Login;
+const mapDispatchToProps = {
+  loginRequest,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
