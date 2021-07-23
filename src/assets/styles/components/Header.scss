@@ -9,6 +9,10 @@
   align-items: center;
 }
 
+.isLogin, .isRegister {
+  background-color: $main-color;
+}
+
 .header__img {
   width: 200px;
   margin: 10px 0 0 10px;
@@ -55,6 +59,8 @@ ul:hover {
 .header__menu--profile img {
   margin-right: 8px;
   width: 40px;
+  border-radius: 100%;
+  object-fit: cover;
 }
 
 .header__menu--profile p {
